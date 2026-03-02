@@ -339,6 +339,20 @@ impl CrowdfundContract {
             .set(&DataKey::NFTContract, &nft_contract);
     }
 
+    /// Sets the NFT contract address used for reward minting.
+    ///
+    /// Only the campaign creator can configure this value.
+    pub fn set_nft_contract(env: Env, creator: Address, nft_contract: Address) {
+        let stored_creator: Address = env.storage().instance().get(&DataKey::Creator).unwrap();
+        if creator != stored_creator {
+            panic!("not authorized");
+        }
+        creator.require_auth();
+        env.storage()
+            .instance()
+            .set(&DataKey::NFTContract, &nft_contract);
+    }
+
     /// Pledge tokens to the campaign without transferring them immediately.
     ///
     /// The pledger must authorize the call. Pledges are recorded off-chain
@@ -610,14 +624,6 @@ impl CrowdfundContract {
             }
         }
 
-        env.storage().instance().set(&DataKey::TotalRaised, &0i128);
-        env.storage()
-            .instance()
-            .set(&DataKey::Status, &Status::Refunded);
-
-        Ok(())
-    }
-
     /// Cancel the campaign and refund all contributors — callable only by
     /// the creator while the campaign is still Active.
     pub fn cancel(env: Env) {
@@ -637,22 +643,6 @@ impl CrowdfundContract {
             .persistent()
             .get(&DataKey::Contributors)
             .unwrap();
-
-        for contributor in contributors.iter() {
-            let contribution_key = DataKey::Contribution(contributor.clone());
-            let amount: i128 = env
-                .storage()
-                .persistent()
-                .get(&contribution_key)
-                .unwrap_or(0);
-            if amount > 0 {
-                token_client.transfer(&env.current_contract_address(), &contributor, &amount);
-                env.storage().persistent().set(&contribution_key, &0i128);
-                env.storage()
-                    .persistent()
-                    .extend_ttl(&contribution_key, 100, 100);
-            }
-        }
 
         env.storage().instance().set(&DataKey::TotalRaised, &0i128);
         env.storage()

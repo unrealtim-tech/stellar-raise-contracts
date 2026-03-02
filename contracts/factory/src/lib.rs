@@ -1,7 +1,7 @@
 #![no_std]
 
 use soroban_sdk::{
-    contract, contractimpl, contracttype, Address, BytesN, Env, IntoVal, Symbol, Vec,
+    contract, contractimpl, contracttype, Address, BytesN, Env, IntoVal, String, Symbol, Vec,
 };
 
 #[cfg(test)]

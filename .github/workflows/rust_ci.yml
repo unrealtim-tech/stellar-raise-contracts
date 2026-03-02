@@ -85,7 +85,7 @@ jobs:
 
       - name: Optimize WASM with wasm-opt
         run: |
-          wasm-opt -Oz \
+          wasm-opt -Oz --enable-sign-ext \
             target/wasm32-unknown-unknown/release/crowdfund.wasm \
             -o target/wasm32-unknown-unknown/release/crowdfund.opt.wasm
 
