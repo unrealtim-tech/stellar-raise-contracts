@@ -130,6 +130,8 @@ pub enum ContractError {
     Overflow = 6,
     /// Returned by `refund_single` when the caller has no contribution to refund.
     NothingToRefund = 7,
+    /// Returned when the campaign goal is below the minimum allowed threshold.
+    GoalTooLow = 8,
 }
 
 #[contractclient(name = "NftContractClient")]
