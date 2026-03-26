@@ -66,18 +66,12 @@ mod contract_state_size_test;
 #[cfg(test)]
 mod contribute_error_handling_tests;
 #[cfg(test)]
-
-#[cfg(test)]
-pub mod proptest_generator_boundary;
-#[cfg(test)]
 #[path = "proptest_generator_boundary.test.rs"]
 mod proptest_generator_boundary_test;
 pub mod stellar_token_minter;
 #[cfg(test)]
 #[path = "stellar_token_minter.test.rs"]
 mod stellar_token_minter_test_comprehensive;
-#[cfg(test)]
-mod withdraw_event_emission_test;
 
 // --- Constants ---
 const CONTRACT_VERSION: u32 = 3;
@@ -220,11 +214,12 @@ pub enum ContractError {
     InvalidBonusGoal = 12,
 
     /// Returned by `contribute` when `amount` is zero.
-    ZeroAmount = 8,
-    BelowMinimum = 9,
-    CampaignNotActive = 10,
+    ZeroAmount = 13,
+    BelowMinimum = 14,
+    CampaignNotActive = 15,
     /// Returned by `contribute` when `amount` is negative.
-    NegativeAmount = 11,
+    NegativeAmount = 16,
+}
 
 /// Interface for an external NFT contract used to mint contributor rewards.
 #[contractclient(name = "NftContractClient")]
