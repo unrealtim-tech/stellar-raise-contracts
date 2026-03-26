@@ -21,14 +21,14 @@ use crate::cargo_toml_rust::{
 
 #[test]
 fn soroban_sdk_version_is_pinned() {
-    assert_eq!(SOROBAN_SDK_VERSION, "22.0.11");
+    assert_eq!(SOROBAN_SDK_VERSION, "22.1.0");
 }
 
 #[test]
 fn soroban_sdk_deprecated_version_is_recorded() {
     #[allow(deprecated)]
     let v = SOROBAN_SDK_VERSION_DEPRECATED;
-    assert_eq!(v, "22.0.1");
+    assert_eq!(v, "22.0.11");
 }
 
 #[test]
@@ -117,13 +117,13 @@ fn dep_record_with_no_deprecated_previous_fails_check() {
 fn dep_record_equality() {
     let a = DepRecord {
         name: "soroban-sdk",
-        version: "22.0.11",
+        version: "22.1.0",
         dev_only: false,
         deprecated_previous: true,
     };
     let b = DepRecord {
         name: "soroban-sdk",
-        version: "22.0.11",
+        version: "22.1.0",
         dev_only: false,
         deprecated_previous: true,
     };
@@ -134,13 +134,13 @@ fn dep_record_equality() {
 fn dep_record_inequality_on_version() {
     let a = DepRecord {
         name: "soroban-sdk",
-        version: "22.0.1",
+        version: "22.0.11",
         dev_only: false,
         deprecated_previous: true,
     };
     let b = DepRecord {
         name: "soroban-sdk",
-        version: "22.0.11",
+        version: "22.1.0",
         dev_only: false,
         deprecated_previous: true,
     };
@@ -202,7 +202,7 @@ fn add_approved_dependency_success() {
     CargoTomlRust::add_approved_dependency(
         env.clone(),
         String::from_str(&env, "soroban-sdk"),
-        String::from_str(&env, "22.0.11"),
+        String::from_str(&env, "22.1.0"),
         2, // security level
         1640995200, // timestamp
         false, // not dev-only
@@ -214,7 +214,7 @@ fn add_approved_dependency_success() {
     
     let dep = deps.get(0).unwrap();
     assert_eq!(dep.name, String::from_str(&env, "soroban-sdk"));
-    assert_eq!(dep.version, String::from_str(&env, "22.0.11"));
+    assert_eq!(dep.version, String::from_str(&env, "22.1.0"));
     assert_eq!(dep.security_level, 2);
     assert!(dep.approved);
     assert!(!dep.dev_only);
@@ -224,7 +224,7 @@ fn add_approved_dependency_success() {
     assert_eq!(versions.len(), 1);
     assert_eq!(
         versions.get(String::from_str(&env, "soroban-sdk")).unwrap(),
-        String::from_str(&env, "22.0.11")
+        String::from_str(&env, "22.1.0")
     );
 }
 
@@ -287,7 +287,7 @@ fn validate_dependency_success() {
     assert!(CargoTomlRust::validate_dependency(
         env.clone(),
         String::from_str(&env, "soroban-sdk"),
-        String::from_str(&env, "22.0.11"),
+        String::from_str(&env, "22.1.0"),
         2
     ));
     
@@ -295,7 +295,7 @@ fn validate_dependency_success() {
     assert!(!CargoTomlRust::validate_dependency(
         env.clone(),
         String::from_str(&env, "soroban-sdk"),
-        String::from_str(&env, "22.0.10"),
+        String::from_str(&env, "22.0.11"),
         2
     ));
 }
@@ -473,7 +473,7 @@ fn run_compliance_check_all_passing() {
     CargoTomlRust::add_approved_dependency(
         env.clone(),
         String::from_str(&env, "soroban-sdk"),
-        String::from_str(&env, "22.0.11"),
+        String::from_str(&env, "22.1.0"),
         2, // within max level 3
         1640995200,
         false,

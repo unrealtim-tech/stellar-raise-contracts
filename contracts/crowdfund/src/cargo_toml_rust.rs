@@ -15,7 +15,7 @@
 //!
 //! | Crate        | Version   | Scope       | Security Level | Status |
 //! |--------------|-----------|-------------|----------------|---------|
-//! | `soroban-sdk`| `22.0.11` | workspace   | 2              | Approved |
+//! | `soroban-sdk`| `22.1.0` | workspace   | 2              | Approved |
 //! | `proptest`   | `1.11.0`  | dev only    | 1              | Approved |
 //!
 //! ## Security Assumptions
@@ -82,14 +82,14 @@ pub struct ComplianceRule {
 /// @notice Changing this constant without a corresponding Cargo.toml bump is
 ///         a documentation error, not a functional change.
 /// @dev Security level: 2 (medium - core SDK dependency)
-pub const SOROBAN_SDK_VERSION: &str = "22.0.11";
+pub const SOROBAN_SDK_VERSION: &str = "22.1.0";
 
 /// The previous soroban-sdk version, retained for audit trail.
 ///
 /// @deprecated Superseded by [`SOROBAN_SDK_VERSION`].
 /// @notice Security level: 2 (medium - core SDK dependency)
-#[deprecated(since = "22.0.11", note = "Upgrade to soroban-sdk 22.0.11")]
-pub const SOROBAN_SDK_VERSION_DEPRECATED: &str = "22.0.1";
+#[deprecated(since = "22.1.0", note = "Upgrade to soroban-sdk 22.1.0")]
+pub const SOROBAN_SDK_VERSION_DEPRECATED: &str = "22.0.11";
 
 /// The proptest version used in dev-dependencies.
 ///
